@@ -133,7 +133,7 @@ Object.keys(packages).forEach((key) => {
           Markup.button.callback('🟦 BEP20', `PAYMENT_METHOD_BEP20_${key}`),
           Markup.button.callback('🟩 ERC20', `PAYMENT_METHOD_ERC20_${key}`),
           Markup.button.callback('🟨 SOL', `PAYMENT_METHOD_SOL_${key}`),
-          Markup.button.callback('🟧 TRX (TRC20)', `PAYMENT_METHOD_TRC20_${key}`), // Added TRX (TRC20)
+          Markup.button.callback('🟧 TRX (TRC20)', `PAYMENT_METHOD_TRC20_${key}`),
         ]),
       }
     );
@@ -142,65 +142,65 @@ Object.keys(packages).forEach((key) => {
 
 // Handle Payment Confirmation
 ['BEP20', 'ERC20', 'SOL', 'TRC20'].forEach((method) => {
-    Object.keys(packages).forEach((key) => {
-      bot.action(`PAYMENT_METHOD_${method}_${key}`, (ctx) => {
-        const { name, price } = packages[key];
-        ctx.reply(
-          `Great choice! You selected **${method}** for the **${name}** (${price}).\n\n` +
-            `Here is the wallet address for payment:\n` +
-            `\`${wallets[method]}\`\n\n` +
-            `After completing the payment, click "I've Paid" to confirm.`,
-          {
-            parse_mode: 'Markdown',
-            ...Markup.inlineKeyboard([Markup.button.callback("I've Paid", `CONFIRM_PAYMENT_${key}_${method}`)]), // Updated callback data
-          }
-        );
-      });
+  Object.keys(packages).forEach((key) => {
+    bot.action(`PAYMENT_METHOD_${method}_${key}`, (ctx) => {
+      const { name, price } = packages[key];
+      ctx.reply(
+        `Great choice! You selected **${method}** for the **${name}** (${price}).\n\n` +
+          `Here is the wallet address for payment:\n` +
+          `\`${wallets[method]}\`\n\n` +
+          `After completing the payment, click "I've Paid" to confirm.`,
+        {
+          parse_mode: 'Markdown',
+          ...Markup.inlineKeyboard([Markup.button.callback("I've Paid", `CONFIRM_PAYMENT_${key}_${method}`)]),
+        }
+      );
     });
   });
-  
-  // Payment Confirmation
-  Object.keys(packages).forEach((key) => {
-    ['BEP20', 'ERC20', 'SOL', 'TRC20'].forEach((method) => {
-      bot.action(`CONFIRM_PAYMENT_${key}_${method}`, async (ctx) => {  // Updated callback data pattern
-        const user = ctx.from;
-        const packageDetails = packages[key];
-        const paymentMethod = method;  // Directly using the method from the loop
-        const walletAddress = wallets[paymentMethod];
-  
-        // Send payment details to the admin
-        try {
-          await bot.telegram.sendMessage(
-            adminId,
-            `💰 **Payment Confirmation** 💰\n\n` +
-            `User: ${user.first_name} (@${user.username})\n` +
-            `Package: ${packageDetails.name}\n` +
-            `Price: ${packageDetails.price}\n` +
-            `Payment Method: ${paymentMethod}\n` +
-            `Wallet Address: ${walletAddress}\n` +
-            `User Telegram ID: ${user.id}\n\n` +
-            `Payment Confirmed ✅`
-          );
-        } catch (error) {
-          console.error('Error sending payment details to admin:', error);
-        }
-  
-        // Reply to the user confirming their payment
-        await ctx.reply(
-          `Thank you for completing your payment! 🎉
+});
 
-Your order is now being processed. To continue, please send 📩 the payment prof (♾️hash transaction link) AND the post details to our support team for further assistance.🤝
+// Payment Confirmation
+Object.keys(packages).forEach((key) => {
+  ['BEP20', 'ERC20', 'SOL', 'TRC20'].forEach((method) => {
+    bot.action(`CONFIRM_PAYMENT_${key}_${method}`, async (ctx) => {
+      const user = ctx.from;
+      const packageDetails = packages[key];
+      const paymentMethod = method;
+      const walletAddress = wallets[paymentMethod];
+
+      // Send payment details to the admin
+      try {
+        await bot.telegram.sendMessage(
+          adminId,
+          `💰 **Payment Confirmation** 💰\n\n` +
+          `User: ${user.first_name} (@${user.username})\n` +
+          `Package: ${packageDetails.name}\n` +
+          `Price: ${packageDetails.price}\n` +
+          `Payment Method: ${paymentMethod}\n` +
+          `Wallet Address: ${walletAddress}\n` +
+          `User Telegram ID: ${user.id}\n\n` +
+          `Payment Confirmed ✅`
+        );
+      } catch (error) {
+        console.error('Error sending payment details to admin:', error);
+      }
+
+      // Reply to the user confirming their payment
+      await ctx.reply(
+        `Thank you for completing your payment! 🎉
+
+Your order is now being processed. To continue, please send 📩 the payment proof (♾️hash transaction link) AND the post details to our support team for further assistance.🤝
 
 You can contact our dedicated support team directly here: https://t.me/BscGemsAlertSupport or use this account for any further queries. We're here to help!🥰`
-        );
-      });
+      );
     });
   });
+});
 
 // Start the bot
 bot.launch()
   .then(() => console.log('Bot is running...'))
   .catch((err) => {
     console.error('Error launching bot:', err);
-    process.exit(1); // Exit with error code if bot fails to start
+    process.exit(1);
   });

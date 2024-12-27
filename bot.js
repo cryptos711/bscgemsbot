@@ -81,24 +81,24 @@ const packages = {
     name: 'Daily Package',
     price: '$400 - $650',
     details:
-      '- 1 Tweet: $600\n- Pinned Tweet (24 Hours): $800\n- 1 Quote Tweet: $600\n- Retweet: $350\n- 1 post on Telegram: $300\n- 1 tweet + 1 post on Telegram: $900\n- Tag your project in our bio for 1 day: $200\n- Tag your project in our bio for 3 days: $500',
+      '- 1 Tweet: $400\n- Pinned Tweet (24 Hours): $650\n- 1 Quote Tweet: $400\n- Retweet: $250\n- 1 post on Telegram: $300\n- 1 tweet + 1 post on Telegram: $600\n- Tag your project in our bio for 1 day: $200\n- Tag your project in our bio for 3 days: $500',
   },
   SHOW_WEEKLY: {
     name: 'Weekly Package',
-    price: '$1200',
+    price: '$900',
     details:
-      '- 3 Tweets: $1200\n- Tag your project in our bio for 1 week: $700',
+      '- 3 Tweets: $900\n- Tag your project in our bio for 1 week: $700',
   },
   SHOW_MONTHLY: {
     name: 'Monthly Package',
-    price: '$3,500',
-    details: '- 10 Tweets: $3,500',
+    price: '$2,500',
+    details: '- 10 Tweets: $2,500',
   },
   SHOW_VIP: {
     name: 'VIP Package',
-    price: '$17,000',
+    price: '$9,000',
     details:
-      '- 50 Tweets: $17,000\n(Unlimited posting period)',
+      '- 50 Tweets: $9,000\n(Unlimited posting period)',
   },
 };
 
